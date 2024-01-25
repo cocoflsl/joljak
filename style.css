@@ -1,0 +1,55 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 75px;
+  padding: 1rem;
+  color: black;
+  background: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.merriweather-bold {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+span {
+  heigth: 100px;
+  padding: 1rem;
+  color: black;
+  background: white;
+  font-weight:normal;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1, p {
+  margin: 0;
+}
+
+main {
+  padding: 1rem;
+  height: 100%;
+}
+
+body {
+  padding-top: 75px;
+  background: #EEE;
+}
+
+body, html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
