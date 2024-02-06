@@ -1,67 +1,69 @@
+<!--index.html-->
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>To CloThes</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+	<head>
+		<title>To CloThes</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css">
 
-    <style>
-      body {
-        position: relative;
-        background-image: url(toclothes.jpg);
-        background-repeat: no-repeat;
-        min-height: 50%;
-        background-position: top;
-        background-size: cover;
-        margin: 0;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        overflow: hidden;
-      }
+		<style>
+			body {
+				position: relative;
+				background-image: url(toclothes.jpg);
+				background-repeat: no-repeat;
+				min-height: 50%;
+				background-position: top;
+				background-size: cover;
+				margin: 0;
+				display: flex;
+				text-align: center;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				overflow: hidden;
+			}
 
-      /* 배경 이미지의 투명도 조절 */
-      body::before {
-        content: "";
-        background-color: rgba(255, 255, 255, 0.7);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-      }
+			/* 배경 이미지의 투명도 조절 */
+			body::before {
+				content: "";
+				background-color: rgba(255, 255, 255, 0.7);
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+			}
 
-      h2 {
-        margin-bottom: 15px;
-        font-size: 70px;
-      }
+			h1 {
+				margin-bottom: 15px;
+				font-size: 70px;
+			}
 
-      p {
-        font-size: 1em;
-        margin-bottom: 30px;
-      }
-    </style>
+			p {
+				font-size: 1em;
+				margin-bottom: 30px;
+			}
+		</style>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
-  </head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+	</head>
 
-  <body>
-    <header>
-      <h1><p class ="Merriweather">To CloThes</p></h1>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/serviceIntro.html">서비스 소개</a></span>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/serviceUse.html">서비스 이용</a></span>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/previous.html">이전 기록 열람</a></span>
-    </header>
+	<body>
+		<header>
+			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
+			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+		</header>
 
-    <div class="main-content">
-      <h2>원하던 의류를 단번에</h2>
-      <p>찾고 싶지만 찾을 수 없는 의류,<br>그림을 그려 찾아보세요.</p>
-      <a href="file:///C:/Users/lin19/Desktop/joljak/serviceUse.html" class="main-button">찾아보기</a>
-    </div>
-  </body>
+		<div class="main-content">
+			<h1>원하던 의류를 단번에</h1>
+			<p>찾고 싶지만 찾을 수 없는 의류,<br>그림을 그려 찾아보세요.</p>
+			<a href="serviceUse.html" class="main-button">찾아보기</a>
+		</div>
+	</body>
 </html>

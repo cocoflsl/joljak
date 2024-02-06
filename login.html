@@ -1,0 +1,111 @@
+<!--login.html-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>로그인</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css">
+
+		<style>
+		body {
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.login-container {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			max-width: 400px;
+			width: 100%;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		label {
+			margin-top: 10px;
+		}
+
+		input {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			margin-bottom: 15px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		button {
+			background-color: #4caf50;
+			color: #fff;
+			padding: 10px 15px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		.error-message {
+			color: red;
+			margin-bottom: 15px;
+		}
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+		<header>
+			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
+			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+		</header>
+
+		<div class="login-container">
+			<p class="Merriweather">Login</p>
+			<form action="login.php" method="post" onsubmit="return validateForm()">
+				<label for="username">ID:</label>
+				<input type="text" id="username" name="username" required>
+
+				<label for="password">PW:</label>
+				<input type="password" id="password" name="password" required>
+
+				<div id="error-message" class="error-message"></div>
+
+				<button type="submit">Login</button>
+			</form>
+		</div>
+
+		<a href="signup.html" class="Merriweather-small">Sign up</a>
+
+		<script>
+			function validateForm() {
+				var username = document.getElementById('username').value;
+				var password = document.getElementById('password').value;
+
+				if (username === "" || password === "") {
+					document.getElementById('error-message').innerHTML = "Username and password are required.";
+					return false;
+				}
+				// 추가적인 유효성 검사 로직을 여기에 추가할 수 있습니다.
+				return true;
+			}
+		</script>
+	</body>
+</html>

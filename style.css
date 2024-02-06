@@ -1,115 +1,187 @@
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 
-  height: 75px;
-  padding: 1rem;
-  color: black;
-  background: white;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
+    height: 75px;
+    padding: 1rem;
+    color: black;
+    background: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
 }
 
-.merriweather-bold {
-  font-family: "Merriweather", serif;
-  font-weight: 700;
-  font-style: normal;
+.nav-link {
+    text-decoration: none;
+    color: black; /* 일반적인 링크 색상 지정 */
+}
+
+.nav-link:hover {
+    font-weight: bold; /* 마우스를 갖다 댔을 때 볼드 처리 */
+}
+
+.Merriweather {
+    font-family: 'Merriweather', sans-serif;
+    text-align: center;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.Merriweather-small {
+    font-family: 'Merriweather', sans-serif;
+    text-align: center;
+    margin: 0;
+    font-size: 15px;
+    font-style: normal;
 }
 
 span {
-  heigth: 100px;
-  padding: 1rem;
-  color: black;
-  background: white;
-  font-weight:normal;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    heigth: 100px;
+    padding: 1rem;
+    color: black;
+    background: white;
+    font-weight:normal;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /*이중선 제거*/
- table {
-   border-collapse : collapse;
-   }
+table {
+    border-collapse : collapse;
+}
 
- th,td {
+th,td {
     width: 150px;
     height: 100px;
     text-align: center;
     border: 1px solid #000;
     vertical-align: bottom;   /* 아래 */
     vertical-align: center;   /* 가운데 */
-  }
+}
 
-h1 {
-  font-family: 'Merriweather', sans-serif;
-  text-align: center;
-  margin: 0;
+.banner-container {
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.banner-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.3;
+}
+
+.banner-container h2 {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    color: black;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    z-index: 1;
+    margin: 0;
 }
 
 p {
-  text-align: center;
-  font-size: 1em;
-  margin-bottom: 30px;
+    text-align: center;
+    font-size: 1em;
+    margin-bottom: 30px;
 }
 
 a {
-  color: #000;
-  text-decoration: none;
-  margin: 0 10px;
+    color: #000;
+    text-decoration: none;
+    margin: 0 10px;
 }
 
 main {
-  padding: 1rem;
-  height: 100%;
+    padding: 1rem;
+    height: 100%;
 }
 
 body {
-  padding-top: 75px;
-  background: #EEE;
+    padding-top: 75px;
+    background: white;
 }
 
 body, html {
-  height: 100%;
+    height: 100%;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .main-button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  text-decoration: none;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 13px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 13px;
+    border-color: #0000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .main-button:hover {
-  background-color: #fff;
-  color: #333;
+    background-color: #fff;
+    color: #333;
 }
 
-.canvas-button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1.2em;
-  text-decoration: none;
-  color: #000;
-  background-color: #ddd;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+@import "reset.css";
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px 0px;
 }
 
-.canvas-button:hover {
-  background-color: #333;
-  color: #fff;
+.canvas {
+    width: 900px;
+    height: 600px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+}
+
+.controls {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls_btns {
+    margin-top: 80px;
+    all: unset;
+    cursor: pointer;
+}
+
+.controls .controls_colors {
+    display: flex;
+}
+
+.controls_colors .controls_color {
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+    border-radius: 25px;
+    cursor: pointer;
 }

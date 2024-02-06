@@ -1,49 +1,107 @@
+<!-- serviceUse.html-->
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>서비스 이용</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+	<head>
+		<title>서비스 이용</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css">
 
-    <style>
-      body {
-        background-color: white;
-      }
+		<style>
+			#tab2 {
+				font-weight: bold;
+			}
 
-      h2 {
-        text-aligh: center;
-      }
+			h2 {
+				text-align: center;
+			}
 
-      p {
-        text-align: left;
-      }
+			p {
+				text-align: left;
+			}
 
-      .notice-container {
-        background-color: #ddd;
-        padding: 20px;
-        border-radius: 13px;
-      }
-    </style>
+			.notice {
+				background-color: #eee;
+				width: 90vw;
+				padding: 20px;
+				border-radius: 13px;
+				margin: 0 auto;
+				margin-top: 20px;
+			}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
-  </head>
+			.content-container {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
 
-  <body>
-    <header>
-      <h1><p class ="Merriweather">To CloThes</p></h1>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/serviceIntro.html">서비스 소개</a></span>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/serviceUse.html">서비스 이용</a></span>
-        <span><a href="file:///C:/Users/lin19/Desktop/joljak/previous.html">이전 기록 열람</a></span>
-    </header>
+			.text-container {
+				flex-basis: 50%;
+				text-align: left;
+				padding-right: 20px;
+			}
 
-    <h2>의류 그림판</h2>
-    <div class="notice">
-      <p>의류 그림판을 활용할 수 있어요.</p>
-      <p>의류 그림판을 통해 웹 안에서 원하는 옷을 직접 그리면,<br>그 그림을 기반으로<br>원하는 옷을 찾아볼 수 있어요!</p>
-      <p>아래를 클릭하면 의류 그림판으로 이동하게 됩니다.</p>
-      <a href="file:///C:/Users/lin19/Desktop/joljak/serviceDrawBoard.html" class="canvas-button">그림판 이동</a>
-    </div>
-  </body>
+			.example-container img {
+				flex-basis: 50%;
+				max-width: 50%;
+				height: auto;
+			}
+
+			.goto-board-container {
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			.goto-board-button {
+				display: inline-block;
+				padding: 10px 20px;
+				font-size: 1.2em;
+				text-decoration: none;
+				color: #000;
+				background-color: #ddd;
+				border-radius: 5px;
+				transition: background-color 0.3s ease, color 0.3s ease;
+			}
+
+			.goto-board-button:hover {
+				background-color: #333;
+				color: #fff;
+			}
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+		<header>
+			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
+			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+		</header>
+
+		<div class="banner-container">
+			<h2>서비스 이용</h2>
+			<img src="toclothes.jpg" width=1024>
+		</div>
+
+		<div class="notice">
+			<h2>의류 그림판</h2>
+			<div class="content-container">
+				<div class="example-container">
+					<img src="toclothes.jpg">
+				</div>
+				<div class="text-container">
+					<p>의류 그림판을 활용할 수 있어요.</p>
+					<p>의류 그림판을 통해 웹 안에서 원하는 옷을 직접 그리면,<br>그 그림을 기반으로<br>원하는 옷을 찾아볼 수 있어요!</p>
+					<p>아래를 클릭하면 의류 그림판으로 이동하게 됩니다.</p>
+				</div>
+			</div>
+			<div class="goto-board-container">
+				<a href="serviceDrawBoard.html" class="goto-board-button">그림판 이동</a>
+			</div>
+		</div>
+	</body>
 </html>

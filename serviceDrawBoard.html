@@ -1,1 +1,64 @@
+<!-- serviceDrawBoard.html-->
 <!DOCTYPE html>
+<html>
+	<head>
+		<title>의류 그림판</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE-edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="style.css">
+
+		<style>
+			#tab2 {
+				font-weight: bold;
+			}
+
+			body {
+				background-color: #eee;
+			}
+
+			p {
+				text-align: left;
+			}
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+		<header>
+			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
+			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+		</header>
+
+		<div class="controls_btns">
+			<button id="jsUndo" class="main-button">뒤로가기</button>
+			<button id="jsMode" class="main-button">채우기로 전환</button>
+			<button id="jsSave" class="main-button">저장하기</button>
+		</div>
+		<canvas id="jsCanvas" class="canvas"></canvas>
+		<div class="controls">
+			<div class="controls_range">
+				<input type="range" id="jsRange" min="0.1" max="5.0" value="2.5" step="0.1"/>
+			</div>
+			<div class="controls_colors" id="JSColors">
+				<div class="controls_color jsColor" style="background-color: black;"></div>
+				<div class="controls_color jsColor" style="background-color: white;"></div>
+				<div class="controls_color jsColor" style="background-color: red;"></div>
+				<div class="controls_color jsColor" style="background-color: orange;"></div>
+				<div class="controls_color jsColor" style="background-color: yellow;"></div>
+				<div class="controls_color jsColor" style="background-color: green;"></div>
+				<div class="controls_color jsColor" style="background-color: blue;"></div>
+				<div class="controls_color jsColor" style="background-color: navy;"></div>
+				<div class="controls_color jsColor" style="background-color: purple;"></div>
+			</div>
+
+		</div>
+		<script src="drawBoard.js"></script>
+	</body>
+</html>
