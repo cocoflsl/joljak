@@ -1,0 +1,152 @@
+<!-- serviceDrawBoard.html-->
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>검색 결과</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css">
+
+		<style>
+			#tab2 {
+				font-weight: bold;
+			}
+
+			body {
+                background: #e2e1e0;
+                text-align: center;
+            }
+
+            .container {
+                background: #fff;
+                margin: 30px auto;
+                border-radius: 2px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+                width: 60%;
+                min-height: 90vh;
+                display : flex;
+                flex-direction: column;
+                align-content: center;
+            }
+
+            .search-header {
+                display: block;
+                font-family: "lobster";
+                font-size: 80px;
+                margin-top : 150px;
+            }
+            .search-content{
+                margin : 50px auto;
+                border : none;
+                border : 2px solid #a0a0a0;
+                border-radius : 25px;
+                width : 350px;
+                padding : 5px 5px;
+            }
+            #search-input {
+                margin : 0 auto;
+                width : 300px;
+                padding : 5px;
+                border : none;
+            }
+            #search-input:focus{
+                outline : none;
+                background-color: #fff;
+            }
+            #search-btn{
+                display : inline-block;
+                background: none;
+                padding : 5px;
+                border : none;
+            }
+            #search-btn:focus{
+                outline : none;
+            }
+            #btn-icon{
+                font-family : Material Icons;
+                font-weight : bold;
+                cursor : pointer;
+            }
+
+			p {
+				text-align: left;
+			}
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+	</head>
+    <body>
+        <header>
+			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
+			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+		</header>
+        <h1>검색 결과</h1>
+        <form id="searchForm">
+            <input type="text" id="query" placeholder="검색어 입력">
+            <button type="submit">검색</button>
+        </form>
+        <div id="imageResults"></div>
+
+
+
+        <script>
+            const API_ID = '4Sp15uY4TdnUCuBQsGff';
+            const API_SECRET = 'NKMcmD5JS0';
+
+            // 이미지 검색 함수
+            async function searchImages(query) {
+                const url = `https://openapi.naver.com/v1/search/image?query=${encodeURIComponent(query)}`;
+
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'X-Naver-Client-Id': API_ID,
+                            'X-Naver-Client-Secret': API_SECRET
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('네이버 이미지 검색 API 호출에 실패했습니다.');
+                    }
+
+                    const data = await response.json();
+                    return data.items.map(item => item.link);
+                } catch (error) {
+                    console.error('API 호출 오류:', error.message);
+                    return [];
+                }
+            }
+
+            // 이미지 검색 및 결과 출력
+            const searchForm = document.getElementById('searchForm');
+            const queryInput = document.getElementById('query');
+            const imageResults = document.getElementById('imageResults');
+
+            searchForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const query = queryInput.value.trim();
+                if (query === '') {
+                    return;
+                }
+
+                imageResults.innerHTML = ''; // 이전 검색 결과 초기화
+
+                try {
+                    const images = await searchImages(query);
+                    images.forEach(imageUrl => {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = query; // 이미지에 대한 설명 추가
+                        imageResults.appendChild(img);
+                    });
+                } catch (error) {
+                    console.error('이미지 검색 오류:', error);
+                }
+            });
+        </script>
+    </body>
+</html>

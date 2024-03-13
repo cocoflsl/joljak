@@ -1,0 +1,45 @@
+<!-- saveImage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Image</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="300"></canvas>
+    <button id="saveBtn">Save Image and Send to Server</button>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const saveBtn = document.getElementById('saveBtn');
+        const ctx = canvas.getContext('2d');
+
+        // 이미지 그리기 등 그림판 로직 추가
+
+        function saveImage() {
+            // Canvas의 이미지 데이터 가져오기
+            const imageData = canvas.toDataURL('image/png');
+
+            // 서버로 이미지 데이터 전송
+            fetch('/save-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: imageData })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Image saved successfully!');
+                } else {
+                    console.error('Failed to save image.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        saveBtn.addEventListener('click', saveImage);
+    </script>
+</body>
+</html>

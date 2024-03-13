@@ -4,9 +4,10 @@ const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.querySelectorAll(".jsColor");
 const range = document.getElementById("jsRange");
-const mode = document.getElementById("jsMode");
+const drawBtn = document.getElementById("jsDraw");
 const saveBtn = document.getElementById("jsSave");
 const undoBtn = document.getElementById("jsUndo");
+const eraseBtn = document.getElementById("jsErase");
 
 const INITIAL_COLOR = "#000000";
 const CANVAS_WIDTH = 900;
@@ -24,6 +25,7 @@ ctx.lineWidth = 2.5;
 
 let painting = false;
 let filling = false;
+let eraserMode = false;
 let path = [];
 let undoStack = [];
 let lines = [];
@@ -38,22 +40,46 @@ function stopPainting() {
     }
 }
 
-function startPainting() {
-    painting = true;
+function onMouseUp(event) {
+    stopPainting();
+}
+
+function onMouseDown(event) {
+    const x = event.offsetX;
+    const y = event.offsetY;
+    startPainting(x, y);
 }
 
 function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
-
-    if (!painting) {
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    } else {
+    if (painting && !eraserMode) {
         ctx.lineTo(x, y);
         ctx.stroke();
         path.push({x, y, color: ctx.strokeStyle, size: ctx.lineWidth});
     }
+}
+
+function startPainting(x, y) {
+    painting = true;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}
+
+function continueDrawing(x, y) {
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    path.push({x, y, color: ctx.strokeStyle, size: ctx.lineWidth});
+}
+
+if (canvas) {
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mouseup", stopPainting);
+    canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+    });
 }
 
 function undo() {
@@ -88,14 +114,8 @@ function handleRangeChange(event) {
     ctx.lineWidth = size;
 }
 
-function handleModeClick() {
-    if (filling === true) {
-        filling = false;
-        mode.innerText = "채우기로 전환";
-    } else {
-        filling = true;
-        mode.innerText = "그리기로 전환";
-    }
+function handleDrawClick() {
+    painting = true; // 그림 그리기 시작
 }
 
 function handleUndoClick() {
@@ -108,17 +128,40 @@ function handleCanvasClick() {
     }
 }
 
+function handleEraserClick() {
+    eraserMode = !eraserMode; // 지우개 모드를 토글
+    if (eraserMode) {
+        ctx.strokeStyle = "#00000000"; // 지우개 모드일 때는 흰색으로 설정
+    } else {
+        ctx.strokeStyle = INITIAL_COLOR; // 그리기 모드일 때는 초기 색상으로 설정
+    }
+}
+
 // 우클릭 방지
 function handleCM(event) {
     event.preventDefault();
 }
 
-function handleSaveClick() {
-    const image = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "PaintJS[EXPORT]";
-    link.click();
+function handleSaveClick() { // 함수명 수정
+    // Canvas의 이미지 데이터 가져오기
+    const imageData = canvas.toDataURL('image/png');
+
+    // 서버로 이미지 데이터 전송
+    fetch('/save-image', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image: imageData })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Image saved successfully!');
+        } else {
+            console.error('Failed to save image.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 if (canvas) {
@@ -139,8 +182,8 @@ if (range) {
     range.addEventListener("input", handleRangeChange);
 }
 
-if (mode) {
-    mode.addEventListener("click", handleModeClick);
+if (drawBtn) {
+    drawBtn.addEventListener("click", handleDrawClick);
 }
 
 if (saveBtn) {
@@ -149,4 +192,8 @@ if (saveBtn) {
 
 if (undoBtn) {
     undoBtn.addEventListener("click", undo);
+}
+
+if (eraseBtn) {
+    eraseBtn.addEventListener("click", handleEraserClick);
 }
