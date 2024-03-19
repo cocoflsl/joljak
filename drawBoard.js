@@ -142,26 +142,10 @@ function handleCM(event) {
     event.preventDefault();
 }
 
-function handleSaveClick() { // 함수명 수정
-    // Canvas의 이미지 데이터 가져오기
-    const imageData = canvas.toDataURL('image/png');
-
-    // 서버로 이미지 데이터 전송
-    fetch('/save-image', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: imageData })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Image saved successfully!');
-        } else {
-            console.error('Failed to save image.');
-        }
-    })
-    .catch(error => console.error('Error:', error));
+function submitFormWithImage(base64Image) {
+    const base64Image = canvas.toDataURL('image/png');
+    document.getElementById('imageData').value = base64Image;
+    document.querySelector('.imageForm').submit();
 }
 
 if (canvas) {
@@ -187,7 +171,7 @@ if (drawBtn) {
 }
 
 if (saveBtn) {
-    saveBtn.addEventListener("click", handleSaveClick);
+    saveBtn.addEventListener("click", submitFormWithImage);
 }
 
 if (undoBtn) {

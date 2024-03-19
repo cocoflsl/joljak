@@ -50,9 +50,12 @@
 			<button id="jsErase" class="main-button">
 				<img src="button-erase.png" width="20" alt="지우기">
 			</button>
-			<button id="jsSave" class="main-button">
-				<img src="button-search.png" width="20" alt="검색하기">
-			</button>
+			<form class="imageForm" action="upload.php" method="post">
+				<input type="hidden" id="imageData" name="imageData">
+				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">
+					<img src="button-search.png" width="20" alt="저장하기">
+				</button>
+			</form>
 		</div>
 		<canvas id="jsCanvas" class="canvas"></canvas>
 		<div class="controls">
@@ -70,7 +73,6 @@
 				<div class="controls_color jsColor" style="background-color: navy;"></div>
 				<div class="controls_color jsColor" style="background-color: purple;"></div>
 			</div>
-
 		</div>
 		<script src="drawBoard.js"></script>
 	</body>

@@ -67,6 +67,19 @@
                 cursor : pointer;
             }
 
+			.gallery {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				gap: 10px;
+				padding: 20px;
+			}
+
+			.gallery img {
+				width: 100%;
+				height: auto;
+				display: block;
+			}
+
 			p {
 				text-align: left;
 			}
@@ -84,69 +97,95 @@
 			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
 			<span><a href="login.html" class="Merriweather-small">Login</a></span>
 		</header>
-        <h1>검색 결과</h1>
-        <form id="searchForm">
-            <input type="text" id="query" placeholder="검색어 입력">
-            <button type="submit">검색</button>
-        </form>
-        <div id="imageResults"></div>
 
-
+		<div class="container">
+			<h1>검색 결과<h1>
+			<div class="search-content">
+    			<form id="imageSearchForm">
+					<input type="file" id="imageInput" accept="image/*">
+					<button type="submit" id="search-btn">
+						<span id="btn-icon" class="material-icons">search</span>
+					</button>
+				</form>
+			</div>
+			<div id="imageResults"></div>
+		</div>
 
         <script>
-            const API_ID = '4Sp15uY4TdnUCuBQsGff';
-            const API_SECRET = 'NKMcmD5JS0';
+			// Bing Visual Search API 키
+			const API_KEY = '84900ec94e08423b9468f053da33eff9';
 
-            // 이미지 검색 함수
-            async function searchImages(query) {
-                const url = `https://openapi.naver.com/v1/search/image?query=${encodeURIComponent(query)}`;
+			// 이미지 검색 함수
+			async function searchImages(query) {
+				const url = `https://api.bing.microsoft.com/v7.0/images/visualsearch?q=${encodeURIComponent(query)}`;
 
-                try {
-                    const response = await fetch(url, {
-                        headers: {
-                            'X-Naver-Client-Id': API_ID,
-                            'X-Naver-Client-Secret': API_SECRET
-                        }
-                    });
+				try {
+					const response = await fetch(url, {
+						headers: {
+							'Ocp-Apim-Subscription-Key': API_KEY
+						}
+					});
 
-                    if (!response.ok) {
-                        throw new Error('네이버 이미지 검색 API 호출에 실패했습니다.');
-                    }
+					if (!response.ok) {
+						throw new Error('Bing Visual Search API 호출에 실패했습니다.');
+					}
 
-                    const data = await response.json();
-                    return data.items.map(item => item.link);
-                } catch (error) {
-                    console.error('API 호출 오류:', error.message);
-                    return [];
-                }
-            }
+					const data = await response.json();
+					return data;
+				} catch (error) {
+					console.error('API 호출 오류:', error.message);
+					return null;
+				}
+			}
 
-            // 이미지 검색 및 결과 출력
-            const searchForm = document.getElementById('searchForm');
-            const queryInput = document.getElementById('query');
-            const imageResults = document.getElementById('imageResults');
+			// 이미지 검색 폼
+			const imageSearchForm = document.getElementById('imageSearchForm');
+			const imageInput = document.getElementById('imageInput');
+			const imageResults = document.getElementById('imageResults');
 
-            searchForm.addEventListener('submit', async function(event) {
-                event.preventDefault();
-                const query = queryInput.value.trim();
-                if (query === '') {
-                    return;
-                }
+			imageSearchForm.addEventListener('submit', async function(event) {
+				event.preventDefault();
+				const file = imageInput.files[0];
+				if (!file) {
+					console.error('이미지를 선택하세요.');
+					return;
+				}
 
-                imageResults.innerHTML = ''; // 이전 검색 결과 초기화
+				try {
+					const base64 = await convertImageToBase64(file);
+					const result = await searchImages(base64);
+					displayImages(result);
+				} catch (error) {
+					console.error('이미지 검색 오류:', error);
+				}
+			});
 
-                try {
-                    const images = await searchImages(query);
-                    images.forEach(imageUrl => {
-                        const img = document.createElement('img');
-                        img.src = imageUrl;
-                        img.alt = query; // 이미지에 대한 설명 추가
-                        imageResults.appendChild(img);
-                    });
-                } catch (error) {
-                    console.error('이미지 검색 오류:', error);
-                }
-            });
+			// 이미지를 Base64로 변환
+			function convertImageToBase64(file) {
+				return new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onload = () => resolve(reader.result.split(',')[1]);
+					reader.onerror = error => reject(error);
+					reader.readAsDataURL(file);
+				});
+			}
+
+			// 검색 결과를 화면에 표시
+			function displayImages(result) {
+				imageResults.innerHTML = ''; // 이전 결과 지우기
+				if (result && result.tags && result.tags.length > 0) {
+					result.tags.forEach(tag => {
+						if (tag.actions && tag.actions.length > 0) {
+							const imageUrl = tag.actions[0].data.value;
+							const img = document.createElement('img');
+							img.src = imageUrl;
+							imageResults.appendChild(img);
+						}
+					});
+				} else {
+					console.error('검색 결과가 없습니다.');
+				}
+			}
         </script>
     </body>
 </html>
