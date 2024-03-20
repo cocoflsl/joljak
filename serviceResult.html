@@ -100,92 +100,11 @@
 
 		<div class="container">
 			<h1>검색 결과<h1>
-			<div class="search-content">
-    			<form id="imageSearchForm">
-					<input type="file" id="imageInput" accept="image/*">
-					<button type="submit" id="search-btn">
-						<span id="btn-icon" class="material-icons">search</span>
-					</button>
-				</form>
+			<div class="gallery">
+				{% for result in search_results %}
+				<img src="{{ result.image_url }}" alt="{{ result.description }}">
+				{% endfor %}
 			</div>
-			<div id="imageResults"></div>
 		</div>
-
-        <script>
-			// Bing Visual Search API 키
-			const API_KEY = '84900ec94e08423b9468f053da33eff9';
-
-			// 이미지 검색 함수
-			async function searchImages(query) {
-				const url = `https://api.bing.microsoft.com/v7.0/images/visualsearch?q=${encodeURIComponent(query)}`;
-
-				try {
-					const response = await fetch(url, {
-						headers: {
-							'Ocp-Apim-Subscription-Key': API_KEY
-						}
-					});
-
-					if (!response.ok) {
-						throw new Error('Bing Visual Search API 호출에 실패했습니다.');
-					}
-
-					const data = await response.json();
-					return data;
-				} catch (error) {
-					console.error('API 호출 오류:', error.message);
-					return null;
-				}
-			}
-
-			// 이미지 검색 폼
-			const imageSearchForm = document.getElementById('imageSearchForm');
-			const imageInput = document.getElementById('imageInput');
-			const imageResults = document.getElementById('imageResults');
-
-			imageSearchForm.addEventListener('submit', async function(event) {
-				event.preventDefault();
-				const file = imageInput.files[0];
-				if (!file) {
-					console.error('이미지를 선택하세요.');
-					return;
-				}
-
-				try {
-					const base64 = await convertImageToBase64(file);
-					const result = await searchImages(base64);
-					displayImages(result);
-				} catch (error) {
-					console.error('이미지 검색 오류:', error);
-				}
-			});
-
-			// 이미지를 Base64로 변환
-			function convertImageToBase64(file) {
-				return new Promise((resolve, reject) => {
-					const reader = new FileReader();
-					reader.onload = () => resolve(reader.result.split(',')[1]);
-					reader.onerror = error => reject(error);
-					reader.readAsDataURL(file);
-				});
-			}
-
-			// 검색 결과를 화면에 표시
-			function displayImages(result) {
-				imageResults.innerHTML = ''; // 이전 결과 지우기
-				if (result && result.tags && result.tags.length > 0) {
-					result.tags.forEach(tag => {
-						if (tag.actions && tag.actions.length > 0) {
-							const imageUrl = tag.actions[0].data.value;
-							const img = document.createElement('img');
-							img.src = imageUrl;
-							imageResults.appendChild(img);
-						}
-					});
-				} else {
-					console.error('검색 결과가 없습니다.');
-				}
-			}
-        </script>
     </body>
 </html>

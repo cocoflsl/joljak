@@ -1,0 +1,16 @@
+<!-- upload.php -->
+
+<?php
+$imageData = $_POST['imageData'];
+
+// Flask 애플리케이션으로 이미지 데이터를 전송
+$response = file_get_contents("http://127.0.0.1:5000/analyze", false, stream_context_create([
+    'http' => [
+        'method' => 'POST',
+        'header' => 'Content-Type: application/json',
+        'content' => json_encode(['imageData' => $imageData])
+    ]
+]));
+
+// 받은 응답 처리
+?>

@@ -52,6 +52,13 @@
 			</button>
 			<form class="imageForm" action="upload.php" method="post">
 				<input type="hidden" id="imageData" name="imageData">
+				<input type="hidden" id="identifier" name="identifier">
+				<button id="jsTopBtn" class="main-button" onclick="selectIdentifier('top')">
+					<img src="button-top.png" width="20" alt="상의 선택">
+				</button>
+				<button id="jsBottomBtn" class="main-button" onclick="selectIdentifier('bottom')">
+					<img src="button-bottom.png" width="20" alt="하의 선택">
+				</button>
 				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">
 					<img src="button-search.png" width="20" alt="저장하기">
 				</button>
@@ -75,5 +82,16 @@
 			</div>
 		</div>
 		<script src="drawBoard.js"></script>
+		<script>
+			// 클라이언트 측에서 선택된 식별자를 설정하는 함수
+			function selectIdentifier(identifier) {
+				document.getElementById('identifier').value = identifier;
+			}
+
+			// 폼을 전송하는 함수
+			function submitForm() {
+				document.getElementById('imageForm').submit();
+			}
+		</script>
 	</body>
 </html>
