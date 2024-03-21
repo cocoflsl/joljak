@@ -6,7 +6,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE-edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 		<style>
 			#tab2 {
@@ -33,34 +33,34 @@
 
 	<body>
 		<header>
-			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
-			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
-			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
-			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
-			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+			<span><a href="/" class="Merriweather">To CloThes</a></span>
+			<span><a href="/intro" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="/use" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="/previous" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="/login" class="Merriweather-small">Login</a></span>
 		</header>
 
 		<div class="controls_btns">
 			<button id="jsUndo" class="main-button">
-				<img src="button-undo.png" width="20" alt="뒤로가기">
+				<img src="{{ url_for('static', filename='img/button-undo.png')}}" width="20" alt="뒤로가기">
 			</button>
 			<button id="jsDraw" class="main-button">
-				<img src="button-draw.png" width="20" alt="그리기">
+				<img src="{{ url_for('static', filename='img/button-draw.png')}}" width="20" alt="그리기">
 			</button>
 			<button id="jsErase" class="main-button">
-				<img src="button-erase.png" width="20" alt="지우기">
+				<img src="{{ url_for('static', filename='img/button-erase.png')}}" width="20" alt="지우기">
 			</button>
 			<form class="imageForm" action="upload.php" method="post">
 				<input type="hidden" id="imageData" name="imageData">
 				<input type="hidden" id="identifier" name="identifier">
 				<button id="jsTopBtn" class="main-button" onclick="selectIdentifier('top')">
-					<img src="button-top.png" width="20" alt="상의 선택">
+					<img src="{{ url_for('static', filename='img/button-top.png')}}" width="20" alt="상의 선택">
 				</button>
 				<button id="jsBottomBtn" class="main-button" onclick="selectIdentifier('bottom')">
-					<img src="button-bottom.png" width="20" alt="하의 선택">
+					<img src="{{ url_for('static', filename='img/button-bottom.png')}}" width="20" alt="하의 선택">
 				</button>
 				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">
-					<img src="button-search.png" width="20" alt="저장하기">
+					<img src="{{ url_for('static', filename='img/button-search.png')}}" width="20" alt="저장하기">
 				</button>
 			</form>
 		</div>
@@ -81,7 +81,7 @@
 				<div class="controls_color jsColor" style="background-color: purple;"></div>
 			</div>
 		</div>
-		<script src="drawBoard.js"></script>
+		<script src="{{ url_for('static', filename='js/drawBoard.js') }}"></script>
 		<script>
 			// 클라이언트 측에서 선택된 식별자를 설정하는 함수
 			function selectIdentifier(identifier) {

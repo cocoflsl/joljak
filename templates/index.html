@@ -4,12 +4,12 @@
 	<head>
 		<title>To CloThes</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 		<style>
 			body {
 				position: relative;
-				background-image: url(toclothes.jpg);
+				background-image: url('/static/img/toclothes.jpg');
 				background-repeat: no-repeat;
 				min-height: 50%;
 				background-position: top;
@@ -53,17 +53,17 @@
 
 	<body>
 		<header>
-			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
-			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
-			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
-			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
-			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+			<span><a href="/" class="Merriweather">To CloThes</a></span>
+			<span><a href="/intro" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="/use" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="/previous" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="/login" class="Merriweather-small">Login</a></span>
 		</header>
 
 		<div class="main-content">
 			<h1>원하던 의류를 단번에</h1>
 			<p>찾고 싶지만 찾을 수 없는 의류,<br>그림을 그려 찾아보세요.</p>
-			<a href="serviceUse.html" class="main-button">찾아보기</a>
+			<a href="/use" class="main-button">찾아보기</a>
 		</div>
 	</body>
 </html>

@@ -4,7 +4,7 @@
 	<head>
 		<title>이전 기록 열람</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 		<style>
 		#tab3 {
@@ -19,16 +19,16 @@
 
 	<body>
 		<header>
-			<span><a href="index.html" class="Merriweather">To CloThes</a></span>
-			<span><a href="serviceIntro.html" class="nav-link" id="tab1">서비스 소개</a></span>
-			<span><a href="serviceUse.html" class="nav-link" id="tab2">서비스 이용</a></span>
-			<span><a href="previous.html" class="nav-link" id="tab3">이전 기록 열람</a></span>
-			<span><a href="login.html" class="Merriweather-small">Login</a></span>
+			<span><a href="/" class="Merriweather">To CloThes</a></span>
+			<span><a href="/intro" class="nav-link" id="tab1">서비스 소개</a></span>
+			<span><a href="/use" class="nav-link" id="tab2">서비스 이용</a></span>
+			<span><a href="/previous" class="nav-link" id="tab3">이전 기록 열람</a></span>
+			<span><a href="/login" class="Merriweather-small">Login</a></span>
 		</header>
 
 		<div class="banner-container">
 			<h2>이전 기록 열람</h2>
-			<img src="toclothes.jpg" width=1024>
+			<img src="{{ url_for('static', filename='img/toclothes.jpg') }}" alt="Description of image1" width=1024>
 		</div>
 
 
