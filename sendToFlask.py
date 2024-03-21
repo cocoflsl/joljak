@@ -9,11 +9,19 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/intro')
+def intro():
+    return render_template('serviceIntro.html')
+
+@app.route('/use')
+def notice():
+    return render_template('serviceUse.html')
 
 @app.route('/drawing')
 def drawing_page():
@@ -81,3 +89,15 @@ def result():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/previous')
+def drawing_page():
+    return render_template('previous.html')
+
+@app.route('/login')
+def drawing_page():
+    return render_template('login.html')
+
+#@app.route('/signup')
+#def drawing_page():
+    #return render_template('login.html')
