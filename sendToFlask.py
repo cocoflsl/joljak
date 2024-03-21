@@ -1,6 +1,6 @@
 # sendToFlask.py
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import base64
 from PIL import Image
 from io import BytesIO
@@ -27,7 +27,7 @@ def notice():
 def drawing_page():
     return render_template('serviceDrawBoard.html')
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/drawing/analyze', methods=['POST'])
 def analyze():
     data = request.form.to_dict()
     identifier = data.get('identifier')
@@ -37,11 +37,12 @@ def analyze():
     image_data = base64.b64decode(image_data.split(',')[1])
     image = Image.open(BytesIO(image_data))
     image = image.resize((256, 256))
+    print(image_data)
 
     # 이미지 전처리
     image = np.array(image)
     image = (image - 127.5) / 127.5
-    image = np.array([image])
+    image = np.expand_dims(image, axis=0)
 
     # 상하의에 따라 모델 불러오기
     if identifier == 'top':
@@ -49,28 +50,27 @@ def analyze():
     elif identifier == 'bottom':
         gen_model = tf.keras.models.load_model('gen_model_bottomwear.h5')
     else:
-        result = {'error': 'Invalid identifier'}
+        return render_template('serviceResult.html', error='Invalid identifier')
 
     # 모델에 입력해 이미지 생성
     generated_image = gen_model.predict(image)
     generated_image = (generated_image + 1) / 2.0
-    generated_image = generated_image[0]
-    generated_image = (generated_image*255).astype(np.uint8)
+    generated_image = np.squeeze(generated_image, axis=0)
+    generated_image = (generated_image * 255).astype(np.uint8)
     generated_image = Image.fromarray(generated_image)
 
     # 생성된 이미지를 Base64 문자열로 인코딩
     buffered = BytesIO()
     generated_image.save(buffered, format="PNG")
-    encoded_image = base64.b64encode(buffered.getvalue())
 
     # Bing Visual Search API 호출
     headers = {'Ocp-Apim-Subscription-Key': '84900ec94e08423b9468f053da33eff9', 'Content-Type': 'application/octet-stream'}
-    params = {'mkt': 'en-US'}
+    params = {'mkt': 'ko-KR'}
     response = requests.post(
         "https://api.bing.microsoft.com/v7.0/images/visualsearch",
-        headers=headers,
-        params=params,
-        data=buffered.getvalue()
+        headers = headers,
+        params = params,
+        data = buffered.getvalue()
      )
 
     # 검색 결과 처리
