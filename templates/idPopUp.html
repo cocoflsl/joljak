@@ -1,0 +1,24 @@
+<!-- idPopUp.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Example</title>
+</head>
+<body>
+    <h1>Enter Identifier</h1>
+    <input type="text" id="identifierInput">
+    <button id="submitBtn">Submit</button>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // 팝업 창에서 입력한 값을 가져와서 부모 창으로 전달합니다.
+            const identifier = document.getElementById('identifierInput').value;
+            window.opener.postMessage(identifier, '*');
+            window.close();
+        });
+    </script>
+</body>
+</html>

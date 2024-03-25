@@ -1,0 +1,61 @@
+<!-- serviceModelResult.html-->
+<!DOCTYPE html>
+<html>
+   <head>
+        <title>모델 결과</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <style>
+            #tab2 {
+               font-weight: bold;
+            }
+
+            body {
+            background: #e2e1e0;
+            text-align: center;
+            }
+
+            .container {
+                background: #fff;
+                margin: 30px auto;
+                border-radius: 2px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+                width: 60%;
+                min-height: 90vh;
+                display : flex;
+                flex-direction: column;
+                align-content: center;
+            }
+
+            p {
+               text-align: left;
+            }
+
+            /* 추가 */
+            .error-message {
+                color: red;
+                font-size: 20px;
+            }
+        </style>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <span><a href="/" class="Merriweather">To CloThes</a></span>
+            <span><a href="/intro" class="nav-link" id="tab1">서비스 소개</a></span>
+            <span><a href="/use" class="nav-link" id="tab2">서비스 이용</a></span>
+            <span><a href="/previous" class="nav-link" id="tab3">이전 기록 열람</a></span>
+            <span><a href="/login" class="Merriweather-small">Login</a></span>
+        </header>
+
+        <img id="generated-image" src="data:image/png;base64,{{ generated_image_base64 }}" alt="Generated Image">
+        <div class="goto-board-container">
+            <a href="/search" class="main-button">이대로 검색하기</a>
+        </div>
+    </body>
+</html>

@@ -42,25 +42,20 @@
 
 		<div class="controls_btns">
 			<button id="jsUndo" class="main-button">
-				<img src="{{ url_for('static', filename='img/button-undo.png')}}" width="20" alt="뒤로가기">
+				<img src="{{ url_for('static', filename='img/button-undo.png') }}" width="20" alt="뒤로가기">
 			</button>
 			<button id="jsDraw" class="main-button">
-				<img src="{{ url_for('static', filename='img/button-draw.png')}}" width="20" alt="그리기">
+				<img src="{{ url_for('static', filename='img/button-draw.png') }}" width="20" alt="그리기">
 			</button>
 			<button id="jsErase" class="main-button">
-				<img src="{{ url_for('static', filename='img/button-erase.png')}}" width="20" alt="지우기">
+				<img src="{{ url_for('static', filename='img/button-erase.png') }}" width="20" alt="지우기">
 			</button>
-			<form class="imageForm" action="upload.php" method="post">
+			<button id="openPopupBtn">Open Popup</button>
+			<form class="imageForm" action="/drawing/analyze" method="post">
 				<input type="hidden" id="imageData" name="imageData">
-				<input type="hidden" id="identifier" name="identifier">
-				<button id="jsTopBtn" class="main-button" onclick="selectIdentifier('top')">
-					<img src="{{ url_for('static', filename='img/button-top.png')}}" width="20" alt="상의 선택">
-				</button>
-				<button id="jsBottomBtn" class="main-button" onclick="selectIdentifier('bottom')">
-					<img src="{{ url_for('static', filename='img/button-bottom.png')}}" width="20" alt="하의 선택">
-				</button>
+        		<input type="hidden" id="identifier" name="identifier">
 				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">
-					<img src="{{ url_for('static', filename='img/button-search.png')}}" width="20" alt="저장하기">
+					<img src="{{ url_for('static', filename='img/button-search.png') }}" width="20" alt="저장하기">
 				</button>
 			</form>
 		</div>
@@ -83,15 +78,20 @@
 		</div>
 		<script src="{{ url_for('static', filename='js/drawBoard.js') }}"></script>
 		<script>
-			// 클라이언트 측에서 선택된 식별자를 설정하는 함수
-			function selectIdentifier(identifier) {
-				document.getElementById('identifier').value = identifier;
-			}
+			document.getElementById('openPopupBtn').addEventListener('click', function() {
+            	// 팝업 창을 엽니다.
+            	window.open('/drawing/popup', 'Popup', 'width=400,height=200');
+        	});
 
-			// 폼을 전송하는 함수
-			function submitForm() {
-				document.getElementById('imageForm').submit();
-			}
+        	// 팝업에서 전달된 identifier 값을 받아와서 설정합니다.
+        	window.addEventListener('message', function(event) {
+        	    const identifier = event.data;
+        	    document.getElementById('identifier').value = identifier;
+        	});
+
+        	// 이미지 데이터 설정
+        	const imageData = "Your image data"; // 이미지 데이터 설정
+        	document.getElementById('imageData').value = imageData;
 		</script>
 	</body>
 </html>
