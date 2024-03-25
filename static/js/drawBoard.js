@@ -142,38 +142,13 @@ function handleCM(event) {
     event.preventDefault();
 }
 
-function submitFormWithImage(base64Image) {
-    const xhr = new XMLHttpRequest();
-    const url = '/analyze';
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status == 200) {
-                console.log(xhr.responseText);
-            } else {
-                console.error('Error:', xhr.statusText);
-            }
-        }
-    };
-    const requestData = JSON.stringify({imageData: base64Image, identifier: identifier});
-    xhr.send(requestData);
+function handleSaveClick() {
+    const image = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "PaintJS[EXPORT]";
+    link.click();
 }
-
-// HTML 폼에서 이미지 파일을 선택하고 sendImageToServer 함수 호출
-document.getElementById('fileInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-        const imageData = reader.result;
-        const identifier = document.getElementById('identifierInput').value;
-        submitFormWithImage(imageData, identifier);
-    };
-    reader.onerror = function (error) {
-        console.error('Error:', error);
-    };
-});
 
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
@@ -198,7 +173,7 @@ if (drawBtn) {
 }
 
 if (saveBtn) {
-    saveBtn.addEventListener("click", submitFormWithImage);
+    saveBtn.addEventListener("click", handleSaveClick);
 }
 
 if (undoBtn) {
