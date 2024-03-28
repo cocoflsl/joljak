@@ -17,26 +17,16 @@
             text-align: center;
             }
 
-            .container {
-                background: #fff;
-                margin: 30px auto;
-                border-radius: 2px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-                width: 60%;
-                min-height: 90vh;
-                display : flex;
-                flex-direction: column;
-                align-content: center;
+            .image-container {
+                width: 600px;
+                height: 600px;
+                margin-bottom: 30px;
+                overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
             }
 
-            p {
-               text-align: left;
-            }
-
-            /* 추가 */
-            .error-message {
-                color: red;
-                font-size: 20px;
+            .image-container img {
+                width: 100%; /* 이미지가 컨테이너에 꽉 차도록 설정 */
+                height: auto; /* 가로 비율을 유지한 채 세로 비율을 자동 조정 */
             }
         </style>
 
@@ -53,7 +43,9 @@
             <span><a href="/login" class="Merriweather-small">Login</a></span>
         </header>
 
-        <img id="generated-image" src="data:image/png;base64,{{ generated_image_base64 }}" alt="Generated Image">
+        <div class="image-container">
+            <img id="generated-image" src="data:image/png;base64,{{ generated_image_base64 }}" alt="Generated Image">
+        </div>
         <div class="goto-board-container">
             <a href="/search" class="main-button">이대로 검색하기</a>
         </div>

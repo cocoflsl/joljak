@@ -24,6 +24,15 @@
 			.main-button {
 				padding: 5px 8px;
 			}
+
+			.controls_btns {
+    			text-align: center; /* 버튼들을 가운데 정렬하기 위해 */
+				white-space: nowrap; /* 버튼들이 한 줄에 나열되도록 설정 */
+			}
+
+			.controls_btns button {
+				display: inline-block; /* 버튼들을 한 줄에 나열하기 위해 */
+			}
 		</style>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,13 +59,13 @@
 			<button id="jsErase" class="main-button">
 				<img src="{{ url_for('static', filename='img/button-erase.png') }}" width="20" alt="지우기">
 			</button>
-			<button id="openPopupBtn">Open Popup</button>
-			<form class="imageForm" action="/drawing/analyze" method="post">
+			<button id="openPopupBtn" class="main-button">
+				<img src="{{ url_for('static', filename='img/button-top.png') }}" width="20" alt="상하의 선택">
+			</button>
+			<form id="idForm" class="imageForm" action="/drawing/analyze" method="post">
 				<input type="hidden" id="imageData" name="imageData">
         		<input type="hidden" id="identifier" name="identifier">
-				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">
-					<img src="{{ url_for('static', filename='img/button-search.png') }}" width="20" alt="저장하기">
-				</button>
+				<button type="submit" id="jsSave" class="main-button" value="이미지 전송">이미지 생성하기</button>
 			</form>
 		</div>
 		<canvas id="jsCanvas" class="canvas"></canvas>
@@ -80,7 +89,7 @@
 		<script>
 			document.getElementById('openPopupBtn').addEventListener('click', function() {
             	// 팝업 창을 엽니다.
-            	window.open('/drawing/popup', 'Popup', 'width=400,height=200');
+            	window.open('/drawing/popup', 'Popup', 'width=400,height=300');
         	});
 
         	// 팝업에서 전달된 identifier 값을 받아와서 설정합니다.

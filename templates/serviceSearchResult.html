@@ -1,12 +1,12 @@
-<!-- serviceSearchResult.html-->
+<!-- serviceSearch.html-->
 <!DOCTYPE html>
 <html>
    <head>
         <title>검색 결과</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-        <style>
+      <style>
             #tab2 {
                font-weight: bold;
             }
@@ -57,6 +57,9 @@
             background: none;
             padding : 5px;
             border : none;
+                  margin-bottom: 5px;
+                  border: 5px;
+                  background-color: #E4EBF5;
         }
         #search-btn:focus{
             outline : none;
@@ -67,63 +70,136 @@
             cursor : pointer;
         }
 
-            .gallery {
-               display: grid;
-               grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-               gap: 10px;
-               padding: 20px;
-            }
+        .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        padding: 20px;
+        background-color: #fff; /* 흰색 배경 추가 */
+        border-radius: 10px; /* 둥근 테두리 추가 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+      }
 
-            .gallery img {
-               width: 100%;
-               height: auto;
-               display: block;
-            }
+      .gallery img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
 
-            p {
-               text-align: left;
-            }
+      p {
+          text-align: left;
+      }
 
-            /* 추가 */
-            .error-message {
-                color: red;
-                font-size: 20px;
-            }
-        </style>
+    .error-message {
+      color: red;
+      font-size: 20px;
+    }
+      </style>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
-    </head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+   </head>
     <body>
-        <header>
+      <header>
             <span><a href="/" class="Merriweather">To CloThes</a></span>
             <span><a href="/intro" class="nav-link" id="tab1">서비스 소개</a></span>
             <span><a href="/use" class="nav-link" id="tab2">서비스 이용</a></span>
             <span><a href="/previous" class="nav-link" id="tab3">이전 기록 열람</a></span>
             <span><a href="/login" class="Merriweather-small">Login</a></span>
-        </header>
+         </header>
 
-        <div class="container">
-            <h1>검색 결과</h1>
-            <div id="gallery" class="gallery">
-            </div>
-            111
-            <p id="error-message" class="error-message" style="display: none;"></p>
-        </div>
+         <div class="container">
+          <h1>검색 결과</h1>
+          <div>
+               <input type="file" id="file-input">
+           <button id="search-btn"><span id="btn-icon">search</span></button>
+          </div>
+          <div id="gallery" class="gallery">
+          </div>
+          <p id="error-message" class="error-message" style="display: none;"></p>
+         </div>
 
-        <script>
-            // HTML에서 이미지를 표시할 요소를 선택합니다.
-            const gallery = document.getElementById('gallery');
-            const searchResults = JSON.parse('{{ search_results | safe }}');
+            <script>
+                const fileInput = document.getElementById('file-input');
+                const searchBtn = document.getElementById('search-btn');
+                const gallery = document.getElementById('gallery');
+                const errorMessage = document.getElementById('error-message');
 
-            // JSON 응답에서 이미지 정보를 추출하고 각 이미지에 대해 처리합니다.
-            searchResults.forEach(result => {
-                const img = document.createElement('img');
-                img.src = result.image_url;
-                img.alt = result.description;
-                gallery.appendChild(img);
-            });
-        </script>
-    </body>
+                  searchBtn.addEventListener('click', () => {
+                        const file = fileInput.files[0];
+                        if (file) {
+                               const formData = new FormData();
+                               formData.append('image', file);
+                               const apiKey = '12c94928500f418cbf28fba2a804d643';
+                               const apiUrl = 'https://api.bing.microsoft.com/v7.0/images/visualsearch';
+
+                              /*param = {"q" : "item",
+                                    "count" : 30,
+                                    "imageType" : "Photo",
+                                    "imageContent" : "Face",
+                                    "minHeight" : 256,
+                                    "safeSearch" : "strict",
+                                    "color" : "ColorOnly",
+                                   "licence" : "public"
+                                    }
+                                    */
+                               fetch(apiUrl, {
+                                     method: 'POST',
+                                     body: formData,
+                                     headers: {
+                                           'Ocp-Apim-Subscription-Key': apiKey
+                                     }
+                               })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('이미지를 불러오는 도중 오류가 발생했습니다.');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                              console.log(data);
+                              if (data && data.tags && Array.isArray(data.tags)) {
+                                gallery.innerHTML = '';
+                                data.tags.forEach(tag => {
+                                  if (tag.actions && Array.isArray(tag.actions)) {
+                                    tag.actions.forEach(action => {
+                                      if (action.actionType === 'VisualSearch') {
+                                        if (action.data && action.data.value && Array.isArray(action.data.value)) {
+                                          action.data.value.forEach(item => {
+                                            if (item.thumbnailUrl) {
+                                              // 이미지를 클릭하면 해당 이미지를 구매할 수 있는 링크로 새 창에서 열립니다.
+                                              const anchor = document.createElement('a');
+                                              anchor.href = item.hostPageUrl;
+                                              anchor.target = '_blank'; // 새 창에서 열리도록 설정합니다.
+
+                                              const img = document.createElement('img');
+                                              img.src = item.thumbnailUrl;
+                                              img.alt = item.name;
+                                              img.style.width = '100%';
+                                              img.style.height = 'auto';
+
+                                              anchor.appendChild(img);
+                                              gallery.appendChild(anchor);
+                                            }
+                                          });
+                                        }
+                                      }
+                                    });
+                                  }
+                                });
+                              } else {
+                                throw new Error('반환된 데이터가 올바른 형식이 아닙니다.');
+                              }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error.message);
+                                errorMessage.textContent = '이미지를 불러오는 도중 오류가 발생했습니다.';
+                                errorMessage.style.display = 'block';
+                            });
+                           }
+                        });
+
+         </script>
+      </body>
 </html>

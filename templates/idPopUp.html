@@ -5,12 +5,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popup Example</title>
+    <title>상하의 선택</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Enter Identifier</h1>
-    <input type="text" id="identifierInput">
-    <button id="submitBtn">Submit</button>
+    <h1>상의와 하의 중 선택해주세요.</h1>
+    <select name="identifier" id="identifierInput">
+        <option value="top"selected>상의</option>
+        <option value="bottom">하의</option>
+    </select>
+    <button id="submitBtn">결정</button>
 
     <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
