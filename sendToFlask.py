@@ -4,10 +4,11 @@ from flask import Flask, render_template, request
 import json
 from PIL import Image
 from io import BytesIO
-import requests
+import base64
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import load_img
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -37,27 +38,31 @@ def analyze():
     identifier = data.get('identifier')
 
     # 이미지 로드
-    image_path = 'C:/Users/jico0/Downloads/PaintJS[EXPORT].png'  # 로컬 이미지 파일 경로
-    image = Image.open(image_path)
-    image = image.resize((256, 256))
+    if identifier == 'top':
+        image_path = 'C:/Users/jico0/OneDrive/바탕 화면/졸업 프로젝트/테스트 이미지/image_top.png'  # 로컬 이미지 파일 경로
+    elif identifier == 'bottom':
+        image_path = 'C:/Users/jico0/OneDrive/바탕 화면/졸업 프로젝트/테스트 이미지/image_bottom.png'  # 로컬 이미지 파일 경로
+    else :
+        image_path = 'C:/Users/jico0/OneDrive/바탕 화면/졸업 프로젝트/테스트 이미지/KakaoTalk_20240329_005631543.png'  # 로컬 이미지 파일 경로
+    image = load_img(image_path, target_size=(256, 256))
 
     # 이미지 전처리
     image = np.array(image)
     image = (image - 127.5) / 127.5
-    image = np.expand_dims(image, axis=0)
+    image = np.array([image])
 
     # 상하의에 따라 모델 불러오기
     if identifier == 'top':
-        gen_model = tf.keras.models.load_model('gen_model_3_upwear.h5')
+        gen_model = tf.keras.models.load_model(r'C:/Users/jico0/.vscode/joljak-main/main-branch/models/gen_model_3_upwear.h5')
     elif identifier == 'bottom':
-        gen_model = tf.keras.models.load_model('gen_model_bottomwear.h5')
+        gen_model = tf.keras.models.load_model(r'C:/Users/jico0/.vscode/joljak-main/main-branch/models/gen_model_bottomwear.h5')
     else:
         return render_template('serviceResult.html', error='Invalid identifier')
 
     # 모델에 입력해 이미지 생성
     generated_image = gen_model.predict(image)
     generated_image = (generated_image + 1) / 2.0
-    generated_image = np.squeeze(generated_image, axis=0)
+    generated_image = generated_image[0]
     generated_image = (generated_image * 255).astype(np.uint8)
     generated_image = Image.fromarray(generated_image)
 
